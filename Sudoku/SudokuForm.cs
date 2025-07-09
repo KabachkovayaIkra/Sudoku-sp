@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sudoku
@@ -57,7 +51,6 @@ namespace Sudoku
                     cell.GotFocus += (s, e) => HighlightGroup(rowCopy, colCopy);
                     cell.LostFocus += (s, e) => ClearHighlights();
 
-
                     var panel = new Panel();
                     panel.Margin = new Padding(0);
                     panel.Padding = new Padding(
@@ -65,10 +58,7 @@ namespace Sudoku
                         (i % 3 == 0) ? 2 : 0,
                         (j == 8) ? 2 : 0,
                         (i == 8) ? 2 : 0);
-                    panel.Width = 45;
-                    panel.Height = 45;
                     panel.BackColor = Color.Black;
-
                     cell.Dock = DockStyle.Fill;
                     panel.Controls.Add(cell);
 
@@ -81,32 +71,21 @@ namespace Sudoku
         }
         private void HighlightGroup(int row, int col)
         {
-            if (cells == null || row < 0 || row >= 9 || col < 0 || col >= 9)
-            {
-                MessageBox.Show($"HighlightGroup error: row={row}, col={col}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            try
-            {
+            
                 for (int i = 0; i < 9; i++)
                 {
-                    cells[row, i].BackColor = Color.LightYellow;
-                    cells[i, col].BackColor = Color.LightYellow;
+                    cells[row, i].BackColor = Color.LightBlue;
+                    cells[i, col].BackColor = Color.LightBlue;
                 }
 
                 int startRow = (row / 3) * 3;
                 int startCol = (col / 3) * 3;
                 for (int i = startRow; i < startRow + 3; i++)
                     for (int j = startCol; j < startCol + 3; j++)
-                        cells[i, j].BackColor = Color.LightYellow;
+                        cells[i, j].BackColor = Color.LightBlue;
 
-                cells[row, col].BackColor = Color.LightBlue;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Exception in HighlightGroup: {ex.Message}\nrow={row}, col={col}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                cells[row, col].BackColor = Color.Blue;
+            
         }
 
         private void ClearHighlights()
@@ -116,10 +95,7 @@ namespace Sudoku
                 for (int j = 0; j < 9; j++)
                 {
                     var cell = cells[i, j];
-                    if (!cell.Cell.IsInitial && (cell.Cell.DisplayedValue == null || cell.Cell.DisplayedValue != cell.Cell.RealValue))
-                        cell.BackColor = Color.White;
-                    else
-                        cell.BackColor = Color.White;
+                    cell.BackColor = Color.White;
                 }
             }
         }
